@@ -31,12 +31,12 @@ if (!function_exists('getIpAddress')) {
 if (!function_exists('pluck')) {
     /**
      * Pluck some columns from array
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     function pluck(array $data, array $columns): array
     {
-        if (empty($data) || !is_array($data)) throw new Exception("Enter valid data.");
-        if (empty($columns) || !is_array($columns)) throw new Exception("Enter valid columns.");
+        if (empty($data) || !is_array($data)) throw new RuntimeException("Enter valid data.");
+        if (empty($columns) || !is_array($columns)) throw new RuntimeException("Enter valid columns.");
 
         $keys = array_fill_keys(array_values($columns), '');
         $out = array();
@@ -107,7 +107,7 @@ if (!function_exists('parseCSV')) {
 if (!function_exists('arrayToCsv')) {
     /**
      * Array Data to csv file download
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     function arrayToCsv(array $array, string $download = ''): string|false
     {
@@ -120,13 +120,13 @@ if (!function_exists('arrayToCsv')) {
 
         $file = fopen('php://output', 'w');
 
-        if (!$file) throw new Exception('Can\'t open php://output');
+        if (!$file) throw new RuntimeException('Can\'t open php://output');
 
         foreach ($array as $k => $line) {
-            if (!fputcsv($file, $line)) throw new Exception('Can\'t write line ' . ($k + 1) . ": " . $line);
+            if (!fputcsv($file, $line)) throw new RuntimeException('Can\'t write line ' . ($k + 1) . ": " . $line);
         }
 
-        if (!fclose($file)) throw new Exception('Can\'t close php://output');
+        if (!fclose($file)) throw new RuntimeException('Can\'t close php://output');
 
         $content = ob_get_contents();
 
@@ -139,12 +139,12 @@ if (!function_exists('arrayToCsv')) {
 if (!function_exists('validateColumnsExist')) {
     /**
      * Validate if array column exists
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     function validateColumnsExist(array $headers, array $columns): array
     {
-        if (!is_array($headers)) throw new Exception("Provide valid headers array");
-        if (!is_array($columns)) throw new Exception("Provide valid columns array");
+        if (!is_array($headers)) throw new RuntimeException("Provide valid headers array");
+        if (!is_array($columns)) throw new RuntimeException("Provide valid columns array");
 
         $errors = array();
 
@@ -237,11 +237,11 @@ if (!function_exists('isValidDate')) {
 if (!function_exists('formatDate')) {
     /**
      * Format date
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     function formatDate(string|int $datetime, string $format = 'j M, Y \a\t h:i A'): string
     {
-        if (!isValidDate($datetime)) throw new Exception("Enter valid datetime");
+        if (!isValidDate($datetime)) throw new RuntimeException("Enter valid datetime");
 
         $date_exp = "/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/";
 
@@ -256,12 +256,12 @@ if (!function_exists('spellSeconds')) {
     /**
      * Convert number of seconds into hours, minutes and seconds
      * and return an array containing those values
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     function spellSeconds(int $seconds, int $parts = 4, string $join = ', '): string
     {
-        if (!is_int($seconds)) throw new Exception('Enter valid seconds');
-        if (!in_array($parts, [1, 2, 3, 4])) throw new Exception('Enter valid parts value [1-4]');
+        if (!is_int($seconds)) throw new RuntimeException('Enter valid seconds');
+        if (!in_array($parts, [1, 2, 3, 4])) throw new RuntimeException('Enter valid parts value [1-4]');
 
         $time_parts = array();
 
@@ -296,7 +296,7 @@ if (!function_exists('spellSeconds')) {
 if (!function_exists('formatAmount')) {
     /**
      * Format a number with grouped thousands
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     function formatAmount(
         string|float $amount,
@@ -306,7 +306,7 @@ if (!function_exists('formatAmount')) {
     ): string {
         if ($amount === null) return 0;
 
-        if (!is_numeric($amount)) throw new Exception('Enter valid amount');
+        if (!is_numeric($amount)) throw new RuntimeException('Enter valid amount');
 
         return number_format($amount, $decimals, $decimal_separator, $thousands_separator);
     }
@@ -314,7 +314,7 @@ if (!function_exists('formatAmount')) {
 if (!function_exists('displayAmount')) {
     /**
      * Format a number with grouped thousands
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     function displayAmount(
         string|float $amount,
@@ -322,7 +322,7 @@ if (!function_exists('displayAmount')) {
         string $decimal_separator = '.',
         string $thousands_separator = ','
     ): string {
-        if (!is_numeric($amount)) throw new Exception('Enter valid amount');
+        if (!is_numeric($amount)) throw new RuntimeException('Enter valid amount');
 
         return number_format($amount, $decimals, $decimal_separator, $thousands_separator);
     }
@@ -330,11 +330,11 @@ if (!function_exists('displayAmount')) {
 if (!function_exists('SpellAmount')) {
     /**
      * Convert amount to word format
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     function SpellAmount(string|float $amount): string
     {
-        if (!is_numeric($amount)) throw new Exception('Enter valid amount');
+        if (!is_numeric($amount)) throw new RuntimeException('Enter valid amount');
 
         $ones_arr = [1 => 'One', 2 => 'Two', 3 => 'Three', 4 => 'Four', 5 => 'Five', 6 => 'Six', 7 => 'Seven', 8 => 'Eight', 9 => 'Nine', 10 => 'Ten', 11 => 'Eleven', 12 => 'Twelve', 13 => 'Thirteen', 14 => 'Fourteen', 15 => 'Fifteen', 16 => 'Sixteen', 17 => 'Seventeen', 18 => 'Eighteen', 19 => 'Nineteen'];
         $tens_arr = [1 => 'Ten', 2 => 'Twenty', 3 => 'Thirty', 4 => 'Forty', 5 => 'Fifty', 6 => 'Sixty', 7 => 'Seventy', 8 => 'Eighty', 9 => 'Ninety'];
