@@ -4,9 +4,14 @@ custom helper php files used in development process
 
 
 ### [Encrypter.php](./Encrypter.php)
-- Encrypter class to encrypt and decrypt string with password
-  - encrypt method to encrypt string
-  - decrypt method to decrypt string
+- This class encrypts and decrypts the given value. It uses OpenSSL extension with AES-256 cipher for encryption and HMAC-SHA-256 for hash. The encryption and hash can use different keys.
+  - encrypt() to encrypt the given value
+  - decrypt() to decrypt the given value
+  - encryptString() to encrypt the given string without serialization
+  - decryptString() to decrypt the given string without serialization
+  - hash() to create a keyed hash for the given value
+  - static hashEquals() to compare hashes
+  - static isValidKey() to validate the given key
 
 ### [helper.php](./helper.php)
 - Common helper functions
